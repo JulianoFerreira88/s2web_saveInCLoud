@@ -6,6 +6,7 @@ import com.springfirebird.esandesmame.Esandesmame;
 import com.springfirebird.esanparto.Esanparto;
 import com.springfirebird.esanraca.Esanraca;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -81,7 +82,7 @@ public class Esanmatriz implements Serializable {
 
     @OneToMany(mappedBy = "cdmatriz")
     @JsonIgnore
-    private List<Esanparto> partos;
+    private List<Esanparto> partos = new ArrayList<>();
 
     @OneToMany(mappedBy = "cdmatriz")
     @JsonIgnore
@@ -144,27 +145,27 @@ public class Esanmatriz implements Serializable {
     }
 
     public double getMediaNascidos() {
-        return Precision.round(getTotalNascidos() / partos.size(), PRECISION_SCALE);
+        return Precision.round(getTotalNascidos() / getNumPartos() * 1.0, PRECISION_SCALE);
     }
 
     public double getMediaNascidosVivos() {
-        return getTotalNascidosVivos() / partos.size();
+        return getTotalNascidosVivos() / getNumPartos();
     }
 
     public double getMediaNatimortos() {
-        return getTotalNatimortos() / partos.size();
+        return getTotalNatimortos() / getNumPartos();
     }
 
     public double getMediaMumificados() {
-        return getTotalMumificados() / partos.size();
+        return getTotalMumificados() / getNumPartos();
     }
 
     public double getMediaMorteAoNascer() {
-        return getTotalMorteAoNascer() / partos.size();
+        return getTotalMorteAoNascer() / getNumPartos();
     }
 
     public double getMediaBaixaViabilidade() {
-        return getTotalBaixaViabilidade() / partos.size();
+        return getTotalBaixaViabilidade() / getNumPartos();
     }
 
     public double getMediaDesmamados() {
@@ -185,6 +186,10 @@ public class Esanmatriz implements Serializable {
 
     public double getPercentualBaixaViabilidade() {
         return (getTotalBaixaViabilidade() * 100) / getTotalNascidosVivos();
+    }
+
+    public double getNumPartos() {
+        return partos.size() * 1.0;
     }
 
 }
