@@ -24,6 +24,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.apache.commons.math3.util.Precision;
 
 @Entity
 @Table(name = "ESANMATRIZ", catalog = "", schema = "")
@@ -36,6 +37,7 @@ import lombok.ToString;
 public class Esanmatriz implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    private static final int PRECISION_SCALE = 2;
     @Id
     @Basic(optional = false)
     @Column(name = "CDMATRIZ")
@@ -142,7 +144,7 @@ public class Esanmatriz implements Serializable {
     }
 
     public double getMediaNascidos() {
-        return getTotalNascidos() / partos.size();
+        return Precision.round(getTotalNascidos() / partos.size(), PRECISION_SCALE);
     }
 
     public double getMediaNascidosVivos() {
