@@ -101,4 +101,8 @@ public class Esanparto implements Serializable {
     @OneToMany(mappedBy = "cdrelacionado")
     private List<Esanmovanimais> movimentacoes;
 
+    public double getNascidosTotais() {
+        return (nuvivo + nunatimorto + numumificado + numortoaonascer) * 1.0;
+    }
+
 }

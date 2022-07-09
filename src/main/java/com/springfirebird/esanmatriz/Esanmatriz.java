@@ -58,6 +58,7 @@ public class Esanmatriz implements Serializable {
     @Column(name = "CICLOENTRADA")
     private Short cicloentrada;
     @Column(name = "FLESTADOREPRODUTIVO")
+    @JsonIgnore
     private String estadoreprodutivo;
     @Column(name = "FLSITUACAO")
     private String situacao;
@@ -149,47 +150,72 @@ public class Esanmatriz implements Serializable {
     }
 
     public double getMediaNascidosVivos() {
-        return getTotalNascidosVivos() / getNumPartos();
+        double media = getTotalNascidosVivos() / getNumPartos();
+        return Precision.round(media, PRECISION_SCALE);
     }
 
     public double getMediaNatimortos() {
-        return getTotalNatimortos() / getNumPartos();
+        double media = getTotalNatimortos() / getNumPartos();
+        return Precision.round(media, PRECISION_SCALE);
     }
 
     public double getMediaMumificados() {
-        return getTotalMumificados() / getNumPartos();
+        double media = getTotalMumificados() / getNumPartos();
+        return Precision.round(media, PRECISION_SCALE);
     }
 
     public double getMediaMorteAoNascer() {
-        return getTotalMorteAoNascer() / getNumPartos();
+        double media = getTotalMorteAoNascer() / getNumPartos();
+        return Precision.round(media, PRECISION_SCALE);
     }
 
     public double getMediaBaixaViabilidade() {
-        return getTotalBaixaViabilidade() / getNumPartos();
+        double media = getTotalBaixaViabilidade() / getNumPartos();
+        return Precision.round(media, PRECISION_SCALE);
     }
 
     public double getMediaDesmamados() {
-        return getTotalDesmamados() / desmames.size();
+        double media = getTotalDesmamados() / getNumDesmames();
+        return Precision.round(media, PRECISION_SCALE);
+
     }
 
     public double getPercentualNatimortos() {
-        return (getTotalNatimortos() * 100) / getTotalNascidos();
+        double media = (getTotalNatimortos() * 100) / getTotalNascidos();
+        return Precision.round(media, PRECISION_SCALE);
     }
 
     public double getPercentualMumificados() {
-        return (getTotalMumificados() * 100) / getTotalNascidos();
+        double media = (getTotalMumificados() * 100) / getTotalNascidos();
+        return Precision.round(media, PRECISION_SCALE);
     }
 
     public double getPercentualMorteAoNascer() {
-        return (getTotalMorteAoNascer() * 100) / getTotalNascidos();
+        double media = (getTotalMorteAoNascer() * 100) / getTotalNascidos();
+        return Precision.round(media, PRECISION_SCALE);
     }
 
     public double getPercentualBaixaViabilidade() {
-        return (getTotalBaixaViabilidade() * 100) / getTotalNascidosVivos();
+        double media = (getTotalBaixaViabilidade() * 100) / getTotalNascidosVivos();
+        return Precision.round(media, PRECISION_SCALE);
     }
 
     public double getNumPartos() {
         return partos.size() * 1.0;
+    }
+
+    public String getEstado() {
+        if (estadoreprodutivo.equals("L")) {
+            return "Lactante";
+        } else if (estadoreprodutivo.equals("G")) {
+            return "Gestante";
+        } else {
+            return "Vazia";
+        }
+    }
+
+    public double getNumDesmames() {
+        return desmames.size() * 1.0;
     }
 
 }
